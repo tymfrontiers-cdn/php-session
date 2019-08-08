@@ -99,7 +99,7 @@ class Session{
 			$this->_logged_in = true;
 		}else{
       if( isset($_SESSION['user']) ) unset($_SESSION['user']);
-      $this->name = !isset($this->name) ? "USER".time() : $this->name;
+      $this->name = !isset($this->name) ? "GUEST".time() : $this->name;
 			unset($this->user);
 			if(isset($this->_key)) unset($this->_key);
 			$this->_expire = 0;
