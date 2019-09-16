@@ -7,8 +7,8 @@ class Session{
   public $name; # unique id of current user
   public $user;   # = {} user object
   public $location;   # = {} user's location object
-	public $admin_rank = 0; # user's privilege rank 0 - 7
-	public $admin_group = 'GUEST'; # user's privilege rank 0 - 7
+	public $access_rank = 0; # user's privilege rank 0 - 7
+	public $access_group = 'GUEST'; # user's privilege rank 0 - 7
 
   public static $errors = [];
 
@@ -31,13 +31,13 @@ class Session{
       }
       $user = $obj;
     }
-    $this->admin_rank = $_SESSION['admin_rank'] = (
-        \property_exists($user,'admin_rank')
-      ) ? $user->admin_rank
+    $this->access_rank = $_SESSION['access_rank'] = (
+        \property_exists($user,'access_rank')
+      ) ? $user->access_rank
         : 0;
-    $this->admin_group = $_SESSION['admin_group'] = (
-        \property_exists($user,'admin_group')
-      ) ? $user->admin_group
+    $this->access_group = $_SESSION['access_group'] = (
+        \property_exists($user,'access_group')
+      ) ? $user->access_group
         : "GUEST";
     $this->user = $_SESSION['user'] = $user;
     $this->name = $_SESSION['name'] = \property_exists($user,'uniqueid') ?
@@ -71,8 +71,8 @@ class Session{
       if( isset($_SESSION['user']) ) unset($_SESSION['user']);
       if( isset($_SESSION['location']) ) unset($_SESSION['location']);
       if( isset($_SESSION['_expire']) ) unset($_SESSION['_expire']);
-      if( isset($_SESSION['admin_rank']) ) unset($_SESSION['admin_rank']);
-      if( isset($_SESSION['admin_group']) ) unset($_SESSION['admin_group']);
+      if( isset($_SESSION['access_rank']) ) unset($_SESSION['access_rank']);
+      if( isset($_SESSION['access_group']) ) unset($_SESSION['access_group']);
       if( isset($this->user) ) unset($this->user);
       if( isset($this->location) ) unset($this->location);
 
@@ -90,8 +90,8 @@ class Session{
 			session_regenerate_id();
 			$this->user = $_SESSION['user'];
 			$this->name = $_SESSION['name'];
-			$this->admin_rank = @(int)$_SESSION['admin_rank'];
-			$this->admin_group = @$_SESSION['admin_group'];
+			$this->access_rank = @(int)$_SESSION['access_rank'];
+			$this->access_group = @$_SESSION['access_group'];
 			$this->_expire = (int)$_SESSION['_expire'];
       if( !empty($_SESSION['location']) && \gettype($_SESSION['location']) == "object" ){
         $this->location = $_SESSION['location'];
@@ -99,7 +99,7 @@ class Session{
 			$this->_logged_in = true;
 		}else{
       if( isset($_SESSION['user']) ) unset($_SESSION['user']);
-      $this->name = !isset($this->name) ? "GUEST".time() : $this->name;
+      $this->name = !isset($this->name) ? "USER".time() : $this->name;
 			unset($this->user);
 			if(isset($this->_key)) unset($this->_key);
 			$this->_expire = 0;
