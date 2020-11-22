@@ -130,7 +130,7 @@ class Session{
     $data = new Data();
     $string = "{$form}jeSpegUtuxestAJUnAdephUhuvun";
     $token = $data->encodeEncrypt($string);
-    $tym = $expiry > \time() ? $tym : \strtotime('45 min');
+    $tym = $expiry > \time() ? $expiry : \strtotime('45 min');
     $_SESSION['CSRF_token'][$form] = "{$token}::{$tym}";
     return $token;
   }
