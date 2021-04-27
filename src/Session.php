@@ -7,8 +7,8 @@ class Session{
   public $name; # unique id of current user
   public $user;   # = {} user object
   public $location;   # = {} user's location object
-	public $access_rank = 0; # user's privilege rank 0 - 7
-	public $access_group = 'GUEST'; # user's privilege rank 0 - 7
+	protected $_access_rank = 0; # user's privilege rank 0 - 7
+	protected $_access_group = 'GUEST'; # user's privilege rank 0 - 7
 
   public static $errors = [];
 
@@ -31,9 +31,9 @@ class Session{
       }
       $user = $obj;
     }
-    $this->access_rank = $_SESSION['access_rank'] = (
+    $this->_access_rank = $_SESSION['access_rank'] = (
         \property_exists($user,'access_rank')
-      ) ? $user->access_rank
+      ) ? $user->_access_rank
         : 0;
     $this->access_group = $_SESSION['access_group'] = (
         \property_exists($user,'access_group')
@@ -90,7 +90,7 @@ class Session{
 			session_regenerate_id();
 			$this->user = $_SESSION['user'];
 			$this->name = $_SESSION['name'];
-			$this->access_rank = @(int)$_SESSION['access_rank'];
+			$this->_access_rank = @(int)$_SESSION['access_rank'];
 			$this->access_group = @$_SESSION['access_group'];
 			$this->_expire = (int)$_SESSION['_expire'];
       if( !empty($_SESSION['location']) && \gettype($_SESSION['location']) == "object" ){
@@ -158,5 +158,6 @@ class Session{
     }
   }
   public function key(){ return $this->_key; }
-
+  public function access_rank() { return $this->_access_rank; }
+  public function access_group() { return $this->_access_group; }
 }
