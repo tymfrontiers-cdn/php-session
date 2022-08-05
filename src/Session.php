@@ -35,7 +35,7 @@ class Session{
         \property_exists($user,'access_rank')
       ) ? $user->access_rank
         : 0;
-    $this->access_group = $_SESSION['access_group'] = (
+    $this->_access_group = $_SESSION['access_group'] = (
         \property_exists($user,'access_group')
       ) ? $user->access_group
         : "GUEST";
@@ -91,7 +91,7 @@ class Session{
 			$this->user = $_SESSION['user'];
 			$this->name = $_SESSION['name'];
 			$this->_access_rank = @(int)$_SESSION['access_rank'];
-			$this->access_group = @$_SESSION['access_group'];
+			$this->_access_group = @$_SESSION['access_group'];
 			$this->_expire = (int)$_SESSION['_expire'];
       if( !empty($_SESSION['location']) && \gettype($_SESSION['location']) == "object" ){
         $this->location = $_SESSION['location'];
