@@ -33,7 +33,7 @@ class Session{
     }
     $this->_access_rank = $_SESSION['access_rank'] = (
         \property_exists($user,'access_rank')
-      ) ? $user->access_rank
+      ) ? (int)$user->access_rank
         : 0;
     $this->_access_group = $_SESSION['access_group'] = (
         \property_exists($user,'access_group')
