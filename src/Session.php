@@ -158,6 +158,6 @@ class Session{
     }
   }
   public function key(){ return $this->_key; }
-  public function access_rank() { return $this->_access_rank; }
+  public function access_rank() { return (int)$this->_access_rank; }
   public function access_group() { return $this->_access_group; }
 }
